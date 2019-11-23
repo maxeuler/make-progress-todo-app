@@ -1,8 +1,10 @@
-type Message {
+type User {
   id: ID!
-  text: String!
+  email: String!
+  password: String!
 }
 
-input MessageInput {
-  text: String!
+input UserInput {
+  email: String!
+  password: String!
 }

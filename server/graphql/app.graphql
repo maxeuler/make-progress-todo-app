@@ -1,7 +1,7 @@
 type Query {
-  messages: [Message]!
+  user(id: ID!): User
 }
 
 type Mutation {
-  addMessage(input: MessageInput!): Message!
+  addUser(input: UserInput!): ID!
 }

@@ -1,8 +1,5 @@
 const Query = {
-  messages: async (_, __, ctx) => {
-    const messages = await ctx.models.message.find({}).exec();
-    return messages;
-  },
+  user: () => {},
 };
 
 module.exports = Query;
