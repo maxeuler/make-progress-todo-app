@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { css, Global } from '@emotion/core';
 import { ThemeProvider } from 'emotion-theming';
+import Header from './header';
 
 const Inner = styled.div`
   margin: 2rem auto;
@@ -33,10 +34,12 @@ const Page = ({ children }) => (
         *:before,
         *:after {
           box-sizing: inherit;
+          -webkit-tap-highlight-color: transparent;
         }
       `}
     ></Global>
     <ThemeProvider theme={theme}>
+      <Header></Header>
       <Inner>{children}</Inner>
     </ThemeProvider>
   </>

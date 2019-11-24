@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
+import Router from 'next/router';
 import styled from '@emotion/styled';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 const AuthForm = styled.form`
+  fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
   label {
     display: block;
     margin-bottom: 3rem;
@@ -80,6 +87,7 @@ const Signup = () => {
             data: { id },
           } = await addUser({ variables: { email, password } });
           if (!error) {
+            Router.push({ pathname: '/' });
             setEmail('');
             setPassword('');
             setConfirmPassword('');
@@ -87,40 +95,42 @@ const Signup = () => {
         }
       }}
     >
-      <label htmlFor="email">
-        E-Mail
-        <input
-          type="email"
-          name="email"
-          placeholder="sheev.palpatine@gmail.con"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        {emailError ? <p className="error">{emailError}</p> : null}
-      </label>
-      <label htmlFor="password">
-        Password
-        <input
-          type="password"
-          name="password"
-          placeholder="e.g. iamthesenate12"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-        {passwordError ? <p className="error">{passwordError}</p> : null}
-      </label>
-      <label htmlFor="confirm">
-        Confirm Password
-        <input
-          type="password"
-          name="confirm"
-          placeholder="should be your password"
-          value={confirmPassword}
-          onChange={e => setConfirmPassword(e.target.value)}
-        />
-        {confirmError ? <p className="error">{confirmError}</p> : null}
-      </label>
-      <button type="submit">{`Sign${loading ? 'ing' : ''} Up!`}</button>
+      <fieldset disabled={loading} aria-busy={loading}>
+        <label htmlFor="email">
+          E-Mail
+          <input
+            type="email"
+            name="email"
+            placeholder="sheev.palpatine@gmail.con"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          {emailError ? <p className="error">{emailError}</p> : null}
+        </label>
+        <label htmlFor="password">
+          Password
+          <input
+            type="password"
+            name="password"
+            placeholder="e.g. iamthesenate12"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          {passwordError ? <p className="error">{passwordError}</p> : null}
+        </label>
+        <label htmlFor="confirm">
+          Confirm Password
+          <input
+            type="password"
+            name="confirm"
+            placeholder="should be your password"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+          />
+          {confirmError ? <p className="error">{confirmError}</p> : null}
+        </label>
+        <button type="submit">{`Sign${loading ? 'ing' : ''} Up!`}</button>
+      </fieldset>
     </AuthForm>
   );
 };
