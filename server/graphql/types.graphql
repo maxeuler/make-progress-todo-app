@@ -8,3 +8,7 @@ input UserInput {
   email: String!
   password: String!
 }
+
+type SuccessMessage {
+  message: String
+}

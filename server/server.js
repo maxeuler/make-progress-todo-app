@@ -5,9 +5,13 @@ const gqlLoader = require('./utils/gqlLoader');
 module.exports = {
   typeDefs: [gqlLoader('types.graphql'), gqlLoader('app.graphql')],
   resolvers,
-  context: {
+  context: req => ({
+    ...req,
     models: {
       ...models,
     },
+  }),
+  resolverValidationOptions: {
+    requireResolversForResolveType: false,
   },
 };

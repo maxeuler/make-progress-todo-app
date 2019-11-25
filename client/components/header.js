@@ -1,50 +1,22 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import Router from 'next/router';
 import Hamburger from './styles/hamburger';
+import StyledHeader from './styles/header';
 
-const StyledHeader = styled.header`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid ${props => props.theme.colors.primary};
-
-  .logo {
-    display: flex;
-    align-items: center;
-    a {
-      color: #fff;
-    }
-  }
-
-  nav {
-    grid-column: 1/3;
-    grid-row: 2/2;
-    height: auto;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.5s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    &.open {
-      height: auto;
-      max-height: 100vh;
-    }
-
-    li {
-      list-style: none;
-    }
-
-    > a {
-      padding: 1rem;
+const SIGNOUT = gql`
+  mutation SignOut {
+    signout {
+      message
     }
   }
 `;
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [signout, { data, loading, error }] = useMutation(SIGNOUT);
 
   return (
     <StyledHeader>
@@ -54,12 +26,26 @@ const Header = () => {
       <nav className={isNavOpen ? 'open' : null}>
         <a>Profile</a>
         <a>Settings</a>
+        <button
+          type="button"
+          disabled={loading}
+          onClick={async () => {
+            setIsNavOpen(!isNavOpen);
+            await signout();
+            if (!error) {
+              Router.push({ pathname: '/auth' });
+            }
+          }}
+        >
+          Sign Out
+        </button>
       </nav>
       <Hamburger>
         <input
           type="checkbox"
           id="hamburg"
           onChange={() => setIsNavOpen(!isNavOpen)}
+          checked={isNavOpen}
         />
         <label htmlFor="hamburg" className="hamburg">
           <span className="line"></span>

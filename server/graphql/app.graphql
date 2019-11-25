@@ -3,5 +3,7 @@ type Query {
 }
 
 type Mutation {
-  addUser(input: UserInput!): ID!
+  addUser(input: UserInput!): User!
+  signin(input: UserInput!): User! 
+  signout: SuccessMessage!
 }

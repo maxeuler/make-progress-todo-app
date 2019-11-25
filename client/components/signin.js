@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
-import Router from 'next/router';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+import Router from 'next/router';
 import AuthForm from './styles/authForm';
 
-const ADD_USER = gql`
-  mutation AddUser($email: String!, $password: String!) {
-    addUser(input: { email: $email, password: $password }) {
+const SIGNIN = gql`
+  mutation SignIN($email: String!, $password: String!) {
+    signin(input: { email: $email, password: $password }) {
       id
     }
   }
 `;
 
-const Signup = () => {
+const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [confirmError, setConfirmError] = useState('');
 
-  const [addUser, { loading, error }] = useMutation(ADD_USER);
+  const [signin, { loading, error }] = useMutation(SIGNIN);
 
   return (
     <AuthForm
@@ -29,16 +27,13 @@ const Signup = () => {
         e.preventDefault();
         if (!email) setEmailError('Please provide an E-Mail address');
         if (!password) setPasswordError('Please provide a password');
-        if (password != confirmPassword)
-          setConfirmError(`Passwords don't match`);
 
-        if (email && password && password == confirmPassword) {
-          const user = await addUser({ variables: { email, password } });
+        if (email && password) {
+          const user = await signin({ variables: { email, password } });
           if (!error) {
             Router.push({ pathname: '/' });
             setEmail('');
             setPassword('');
-            setConfirmPassword('');
           }
         }
       }}
@@ -66,21 +61,10 @@ const Signup = () => {
           />
           {passwordError ? <p className="error">{passwordError}</p> : null}
         </label>
-        <label htmlFor="confirm">
-          Confirm Password
-          <input
-            type="password"
-            name="confirm"
-            placeholder="should be your password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-          />
-          {confirmError ? <p className="error">{confirmError}</p> : null}
-        </label>
-        <button type="submit">{`Sign${loading ? 'ing' : ''} Up!`}</button>
+        <button type="submit">{`Sign${loading ? 'ing' : ''} In!`}</button>
       </fieldset>
     </AuthForm>
   );
 };
 
-export default Signup;
+export default Signin;

@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const Mutation = {
-  addUser: async (_, { input }, ctx) => {
+  async addUser(_, { input }, ctx) {
     const { email, password } = input;
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -10,7 +11,41 @@ const Mutation = {
       email,
       password: hashedPassword,
     });
-    return user.id;
+
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    // set token as cookie on the response
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    });
+
+    return user;
+  },
+  async signin(_, { input }, ctx) {
+    const { email, password } = input;
+    // check email
+    const user = await ctx.models.user.findOne({ email });
+    if (!user) {
+      throw new Error('No such user found with that email');
+    }
+    // check password
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw new Error('Invalid Password');
+    }
+    // generate jwt
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    // set token as cookie on the response
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    });
+    // return user
+    return user;
+  },
+  signout(_, __, ctx) {
+    ctx.response.clearCookie('token');
+    return { message: 'Goodbye' };
   },
 };
 
