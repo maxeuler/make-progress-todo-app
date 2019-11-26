@@ -6,4 +6,5 @@ type Mutation {
   addUser(input: UserInput!): User!
   signin(input: UserInput!): User! 
   signout: SuccessMessage!
+  addTask(input: TaskInput!): Task!
 }

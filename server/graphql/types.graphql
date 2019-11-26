@@ -12,3 +12,17 @@ input UserInput {
 type SuccessMessage {
   message: String
 }
+
+type Task {
+  id: ID!
+  name: String!
+  unit: String!
+  unitCount: Int!
+  doneUnitCount: Int!
+}
+
+input TaskInput {
+  name: String!
+  unit: String!
+  unitCount: Int!
+}

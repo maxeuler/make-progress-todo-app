@@ -24,7 +24,7 @@ const Mutation = {
   async signin(_, { input }, ctx) {
     const { email, password } = input;
     // check email
-    const user = await ctx.models.user.findOne({ email });
+    const user = await ctx.models.user.findOne({ email }).exec();
     if (!user) {
       throw new Error('No such user found with that email');
     }
@@ -46,6 +46,15 @@ const Mutation = {
   signout(_, __, ctx) {
     ctx.response.clearCookie('token');
     return { message: 'Goodbye' };
+  },
+  async addTask(_, { input }, ctx) {
+    const { name, unit, unitCount } = input;
+    const task = await ctx.models.task.create({
+      name,
+      unit,
+      unitCount: parseFloat(unitCount),
+    });
+    return task;
   },
 };
 
