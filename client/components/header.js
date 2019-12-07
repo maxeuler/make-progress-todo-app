@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Router from 'next/router';
+import Link from 'next/link';
 import Hamburger from './styles/hamburger';
 import StyledHeader from './styles/header';
 
@@ -21,7 +22,9 @@ const Header = () => {
   return (
     <StyledHeader>
       <div className="logo">
-        <a href="">Logo</a>
+        <Link href="/">
+          <a>Logo</a>
+        </Link>
       </div>
       <nav className={isNavOpen ? 'open' : null}>
         <a>Profile</a>
@@ -30,7 +33,7 @@ const Header = () => {
           type="button"
           disabled={loading}
           onClick={async () => {
-            setIsNavOpen(!isNavOpen);
+            setIsNavOpen(false);
             await signout();
             if (!error) {
               Router.push({ pathname: '/auth' });

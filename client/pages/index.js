@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import TaskList from '../components/taskList';
 import AddTaskLink from '../components/addTaskLink';
 
 const HomeLayout = styled.div`
-  background: green;
   height: 100%;
 `;
 
 const Home = () => (
   <HomeLayout>
-    <h3>Hello</h3>
+    <TaskList></TaskList>
     <AddTaskLink></AddTaskLink>
   </HomeLayout>
 );

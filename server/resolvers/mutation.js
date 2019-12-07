@@ -49,12 +49,26 @@ const Mutation = {
   },
   async addTask(_, { input }, ctx) {
     const { name, unit, unitCount } = input;
+    // get id of current user
+    const { userId } = ctx.request;
     const task = await ctx.models.task.create({
       name,
       unit,
       unitCount: parseFloat(unitCount),
+      user: userId,
     });
     return task;
+  },
+  async addUnits(_, { input }, ctx) {
+    const { task, units } = input;
+    const updatedTask = await ctx.models.task
+      .findOneAndUpdate(
+        { _id: task },
+        { $inc: { doneUnitCount: units } },
+        { new: true }
+      )
+      .exec();
+    return updatedTask;
   },
 };
 

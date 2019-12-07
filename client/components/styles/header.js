@@ -10,7 +10,7 @@ const StyledHeader = styled.header`
     display: flex;
     align-items: center;
     a {
-      color: #fff;
+      color: ${props => props.theme.colors.primary};
     }
   }
 
@@ -36,7 +36,20 @@ const StyledHeader = styled.header`
 
     > a,
     button {
+      width: 100%;
       padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: ${props => props.theme.colors.primary};
+      :hover {
+        background: #eee;
+      }
+    }
+
+    > button {
+      background: none;
+      border: none;
     }
   }
 `;

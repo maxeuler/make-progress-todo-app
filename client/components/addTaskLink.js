@@ -8,14 +8,16 @@ const StyledLink = styled.a`
   bottom: 0;
   cursor: pointer;
   width: 100vw;
-  border-top: 1px solid ${props => props.theme.colors.primary};
+  /* border-top: 1px solid ${props => props.theme.colors.primary}; */
+  background: ${props => props.theme.colors.primary};
+  color: #fff;
   padding: 1rem;
   text-align: center;
 `;
 
 const AddTaskLink = () => (
-  <Link href="/new-task">
-    <StyledLink>New Task</StyledLink>
+  <Link href="/add-task">
+    <StyledLink>Add Task</StyledLink>
   </Link>
 );
 

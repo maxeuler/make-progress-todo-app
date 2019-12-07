@@ -1,5 +1,7 @@
 type Query {
   user(id: ID!): User
+  task(id: ID!): Task
+  tasks: [Task]!
 }
 
 type Mutation {
@@ -7,4 +9,5 @@ type Mutation {
   signin(input: UserInput!): User! 
   signout: SuccessMessage!
   addTask(input: TaskInput!): Task!
+  addUnits(input: AddUnitInput!): Task!
 }

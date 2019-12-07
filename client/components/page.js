@@ -12,8 +12,8 @@ const Inner = styled.div`
 
 const theme = {
   colors: {
-    primary: '#ffda79',
-    secondary: '#f7f1e3',
+    primary: '#20123A',
+    secondary: 'ree',
   },
 };
 
@@ -26,8 +26,8 @@ const Page = ({ children }) => (
           margin: 0;
           padding: 0;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          background: #333335;
-          color: #ffda79;
+          background: #fff;
+          color: #20123a;
           box-sizing: border-box;
         }
         *,

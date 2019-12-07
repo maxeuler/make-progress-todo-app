@@ -5,6 +5,7 @@ const connectToDB = url =>
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   });
 
 mongoose.connection.on('connected', () => {
