@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-const List = styled.ul`
+export const List = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -25,7 +25,7 @@ const List = styled.ul`
 `;
 
 const GET_TASKS = gql`
-  {
+  query GetTasks {
     tasks {
       id
       name

@@ -46,6 +46,7 @@ const TaskView = props => {
   const changeValue = units => setNewUnits(units);
   const onSubmit = async () => {
     setProgress(prevState => prevState + newUnits);
+    // update range to start value 1
     setNewUnits(1);
     const res = await addUnits({
       variables: { units: newUnits, task: task.id },

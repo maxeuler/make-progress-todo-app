@@ -29,7 +29,7 @@ const Signin = () => {
         if (!password) setPasswordError('Please provide a password');
 
         if (email && password) {
-          const user = await signin({ variables: { email, password } });
+          await signin({ variables: { email, password } });
           if (!error) {
             Router.push({ pathname: '/' });
             setEmail('');

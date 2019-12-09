@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
 const AuthForm = styled.form`
+  margin-top: 2rem;
+
   fieldset {
     border: none;
     margin: 0;
