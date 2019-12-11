@@ -10,4 +10,5 @@ type Mutation {
   signout: SuccessMessage!
   addTask(input: TaskInput!): Task!
   addUnits(input: AddUnitInput!): Task!
+  deleteTask(id: ID!): Task!
 }

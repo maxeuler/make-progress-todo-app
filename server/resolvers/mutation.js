@@ -70,6 +70,10 @@ const Mutation = {
       .exec();
     return updatedTask;
   },
+  async deleteTask(_, { id }, ctx) {
+    const task = await ctx.models.task.findOneAndDelete({ _id: id }).exec();
+    return task;
+  },
 };
 
 module.exports = Mutation;

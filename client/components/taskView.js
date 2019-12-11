@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import Router from 'next/router';
 import { TaskViewStyle, CompleteMessage } from './styles/task';
 import AddUnitForm from './addUnitForm';
+import TaskActionsSection from './taskActionsSection';
 
 const GET_TASK = gql`
   query GetTask($id: ID!) {
@@ -69,6 +70,7 @@ const TaskView = props => {
 
   return (
     <TaskViewStyle>
+      <TaskActionsSection id={task.id}></TaskActionsSection>
       <h2>{task.name}</h2>
       <div className="progress">
         <div className="status">{task.unit}</div>
