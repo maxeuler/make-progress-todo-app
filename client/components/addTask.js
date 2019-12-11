@@ -1,13 +1,16 @@
+/* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import Router from 'next/router';
 import AuthForm from './styles/authForm';
+import { GET_TASKS } from './taskList';
 
 const ADD_TASK = gql`
   mutation AddTask($name: String!, $unit: String!, $unitCount: String!) {
     addTask(input: { name: $name, unit: $unit, unitCount: $unitCount }) {
       id
+      name
     }
   }
 `;
@@ -17,7 +20,20 @@ const AddTask = () => {
   const [unit, setUnit] = useState('');
   const [unitCount, setUnitCount] = useState(0);
 
-  const [addTask, { loading, error }] = useMutation(ADD_TASK);
+  const [addTask, { loading, error }] = useMutation(ADD_TASK, {
+    update(
+      cache,
+      {
+        data: { addTask },
+      }
+    ) {
+      const { tasks } = cache.readQuery({ query: GET_TASKS });
+      cache.writeQuery({
+        query: GET_TASKS,
+        data: { tasks: [...tasks, addTask] },
+      });
+    },
+  });
 
   return (
     <AuthForm

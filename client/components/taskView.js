@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Router from 'next/router';
@@ -13,6 +13,7 @@ const GET_TASK = gql`
       unit
       unitCount
       doneUnitCount
+      __typename
     }
   }
 `;
@@ -21,13 +22,17 @@ const ADD_UNITS = gql`
   mutation AddUnits($units: Int!, $task: ID!) {
     addUnits(input: { units: $units, task: $task }) {
       id
+      name
+      unit
+      unitCount
+      doneUnitCount
+      __typename
     }
   }
 `;
 
 const TaskView = props => {
   const [newUnits, setNewUnits] = useState(1);
-  const [progress, setProgress] = useState(-1);
 
   const { loading, error: queryError, data } = useQuery(GET_TASK, {
     variables: { id: props.id },
@@ -41,15 +46,24 @@ const TaskView = props => {
   if (!data) return Router.push('/');
 
   const { task } = data;
-  if (progress == -1) setProgress(task.doneUnitCount);
 
   const changeValue = units => setNewUnits(units);
   const onSubmit = async () => {
-    setProgress(prevState => prevState + newUnits);
     // update range to start value 1
     setNewUnits(1);
-    const res = await addUnits({
+    await addUnits({
       variables: { units: newUnits, task: task.id },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        addUnits: {
+          id: task.id,
+          name: task.name,
+          unit: task.unit,
+          unitCount: task.unitCount,
+          doneUnitCount: task.doneUnitCount + newUnits,
+          __typename: 'Task',
+        },
+      },
     });
   };
 
@@ -61,17 +75,17 @@ const TaskView = props => {
         <div className="bar">
           <div
             className="filled-bar"
-            style={{ width: `${(progress / task.unitCount) * 100}%` }}
+            style={{ width: `${(task.doneUnitCount / task.unitCount) * 100}%` }}
           ></div>
         </div>
         <div className="units">
-          <p>{progress}</p>
+          <p>{task.doneUnitCount}</p>
           <p>{task.unitCount}</p>
         </div>
       </div>
-      {task.unitCount - progress > 0 ? (
+      {task.unitCount - task.doneUnitCount > 0 ? (
         <AddUnitForm
-          max={task.unitCount - progress}
+          max={task.unitCount - task.doneUnitCount}
           onChange={changeValue}
           value={newUnits}
           disabled={mutationLoading}

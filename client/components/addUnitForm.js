@@ -8,14 +8,16 @@ const AddUnitForm = props => (
       props.submit();
     }}
   >
-    <input
-      type="range"
-      min="1"
-      max={props.max}
-      value={props.value}
-      onChange={e => props.onChange(parseInt(e.target.value))}
-      disabled={props.disabled}
-    />
+    {props.max != 1 && (
+      <input
+        type="range"
+        min="1"
+        max={props.max}
+        value={props.value}
+        onChange={e => props.onChange(parseInt(e.target.value))}
+        disabled={props.disabled}
+      />
+    )}
     <button type="submit" disabled={props.disabled}>
       {props.disabled ? `...` : `+${props.value}`}
     </button>

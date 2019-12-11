@@ -14,7 +14,7 @@ const Query = {
   async tasks(_, __, ctx) {
     // check if there is user id on the request
     if (!ctx.request.userId) {
-      return null;
+      return [];
     }
     const tasks = await ctx.models.task
       .find({ user: ctx.request.userId })
