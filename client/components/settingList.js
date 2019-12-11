@@ -2,22 +2,19 @@ import React from 'react';
 import Link from 'next/link';
 import { List } from './taskList';
 import Signout from './signout';
+import { ArrowRight } from './styles/svgs';
 
 const SettingList = () => (
   <List>
     <Link href="/">
       <a>
         Change password
-        <div>&rarr;</div>
+        <ArrowRight></ArrowRight>
       </a>
     </Link>
-    <Link href="/">
-      <a>
-        Other settings
-        <div>&rarr;</div>
-      </a>
-    </Link>
-    <Signout></Signout>
+    <Signout>
+      <ArrowRight></ArrowRight>
+    </Signout>
   </List>
 );
 

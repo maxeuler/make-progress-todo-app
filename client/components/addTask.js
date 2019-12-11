@@ -27,7 +27,8 @@ const AddTask = () => {
         data: { addTask },
       }
     ) {
-      const { tasks } = cache.readQuery({ query: GET_TASKS });
+      const data = cache.readQuery({ query: GET_TASKS });
+      const tasks = data ? data.tasks : [];
       cache.writeQuery({
         query: GET_TASKS,
         data: { tasks: [...tasks, addTask] },

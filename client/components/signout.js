@@ -11,7 +11,7 @@ const SIGNOUT = gql`
   }
 `;
 
-const SignOut = () => {
+const SignOut = props => {
   const [signout, { loading, error }] = useMutation(SIGNOUT);
 
   return (
@@ -26,6 +26,7 @@ const SignOut = () => {
       }}
     >
       Sign Out
+      {props.children}
     </button>
   );
 };

@@ -3,13 +3,20 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { ArrowRight } from './styles/svgs';
 
 export const List = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 0;
 
-  a {
+  button {
+    border: none;
+    cursor: pointer;
+  }
+
+  a,
+  button {
     text-decoration: none;
     padding: 0.8rem 1rem;
     color: ${props => props.theme.colors.primary};
@@ -36,6 +43,8 @@ export const GET_TASKS = gql`
 const TaskList = () => {
   const { loading, error, data } = useQuery(GET_TASKS);
 
+  throw new Error('TODO: cache update für sign out?');
+
   if (loading) return 'Loading...';
   if (error)
     return (
@@ -51,7 +60,7 @@ const TaskList = () => {
           <Link href={`/task?id=${task.id}`} key={task.id}>
             <a>
               {task.name}
-              <div>&rarr;</div>
+              <ArrowRight></ArrowRight>
             </a>
           </Link>
         ))}

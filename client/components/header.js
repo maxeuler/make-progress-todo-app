@@ -22,7 +22,7 @@ const Header = () => {
       <Link href="/">
         <a>Logo</a>
       </Link>
-      <button
+      {/* <button
         type="button"
         disabled={loading}
         onClick={async () => {
@@ -33,7 +33,10 @@ const Header = () => {
         }}
       >
         Sign Out
-      </button>
+      </button> */}
+      <Link href="/settings">
+        <a>Settings</a>
+      </Link>
     </StyledHeader>
   );
 };
