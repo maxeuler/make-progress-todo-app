@@ -44,7 +44,7 @@ const TaskView = props => {
 
   if (loading) return <p>Loading...</p>;
   // return if something is wrong with the url
-  if (!data) return Router.push('/');
+  if (!data) return <p>404 Not Found</p>;
 
   const { task } = data;
 

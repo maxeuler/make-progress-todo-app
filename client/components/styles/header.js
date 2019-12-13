@@ -19,6 +19,7 @@ const StyledHeader = styled.header`
   > * {
     font-size: 1rem;
     padding: 1rem;
+    outline: none;
   }
 
   button {

@@ -13,6 +13,7 @@ export const List = styled.ul`
   button {
     border: none;
     cursor: pointer;
+    background: none;
   }
 
   a,
@@ -24,6 +25,7 @@ export const List = styled.ul`
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #eee;
+    outline: none;
 
     :hover {
       background: #eee;
@@ -43,7 +45,7 @@ export const GET_TASKS = gql`
 const TaskList = () => {
   const { loading, error, data } = useQuery(GET_TASKS);
 
-  throw new Error('TODO: cache update für sign out?');
+  // throw new Error('TODO: cache update für sign out?');
 
   if (loading) return 'Loading...';
   if (error)
