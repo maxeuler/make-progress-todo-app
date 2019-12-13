@@ -7,7 +7,7 @@ import Header from './header';
 const Inner = styled.div`
   margin: 2rem auto;
   width: 90%;
-  max-width: 1200px;
+  max-width: 900px;
 `;
 
 const theme = {

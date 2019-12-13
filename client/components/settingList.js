@@ -6,7 +6,7 @@ import { ArrowRight } from './styles/svgs';
 
 const SettingList = () => (
   <List>
-    <Link href="/">
+    <Link href="/change-password">
       <a>
         Change password
         <ArrowRight></ArrowRight>

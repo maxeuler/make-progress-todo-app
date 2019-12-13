@@ -38,7 +38,9 @@ export const TaskViewStyle = styled.div`
 
 export const AddForm = styled.form`
   width: 100%;
+  max-width: 900px;
   height: 4rem;
+  margin: 0 auto;
   margin-top: 2rem;
   padding: 0 1rem;
   padding-bottom: 1rem;
@@ -46,7 +48,6 @@ export const AddForm = styled.form`
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  left: 0;
   bottom: 0;
 
   input[type='range'] {

@@ -4,16 +4,16 @@ const jwt = require('jsonwebtoken');
 const Mutation = {
   async addUser(_, { input }, ctx) {
     const { email, password } = input;
-
+    // hash input password
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    // save user to db
     const user = await ctx.models.user.create({
       email,
       password: hashedPassword,
     });
-
+    // generate token
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
-    // set token as cookie on the response
+    // set token as cookie on the response so they are logged in
     ctx.response.cookie('token', token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365,
@@ -73,6 +73,18 @@ const Mutation = {
   async deleteTask(_, { id }, ctx) {
     const task = await ctx.models.task.findOneAndDelete({ _id: id }).exec();
     return task;
+  },
+  async changePassword(_, { password }, ctx) {
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    // get id of logged in user
+    const { userId } = ctx.request;
+    // update password
+    await ctx.models.user
+      .findOneAndUpdate({ _id: userId }, { password: hashedPassword })
+      .exec();
+    // return success
+    return { message: 'Password changed' };
   },
 };
 

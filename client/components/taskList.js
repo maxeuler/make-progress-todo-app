@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowRight } from './styles/svgs';
 
 export const List = styled.ul`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   padding: 0;
